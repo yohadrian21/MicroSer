@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+option csharp_namespace = "OrderGRPC";
+
+import "google/protobuf/timestamp.proto"; // Import Timestamp for date/time fields
+
+package salesOrder;
+
+// The greeting service definition.
+service SalesOrders {
+  // Sends a greeting
+   rpc CreateOrder (SalesOrder) returns (SalesOrder);
+  rpc ReadOrder (GetOrderDetailRequest) returns (GetOrderDetailResponse);
+  rpc UpdateOrder (SalesOrder) returns (SalesOrder);
+  rpc DeleteOrder (GetOrderDetailRequest) returns (GetOrderDetailResponse);
+  rpc ListOrders (GetOrderRequest) returns (GetOrderResponse);
+}
+
+
+message SalesOrder {
+  int32 ID = 1;
+  google.protobuf.Timestamp IssueDate = 2;
+  string Subject = 3;
+  int32 CustomerID = 4;
+  google.protobuf.Timestamp DeliveryDate = 5;
+  int32 Status = 6;
+  double SubTotal = 7;
+  double GrandTotal = 8;
+  repeated SalesOrderDetail OrdersDetail = 9;
+  int32 TotalItem = 10;
+  double Tax = 11;
+  string OrdersNumber = 12;
+}
+
+message SalesOrderDetail {
+  int32 ID = 1;
+  int32 OrdersID = 2;
+  int32 ItemID = 3;
+  int32 Qty = 4;
+  double Amount = 5;
+}
+
+message GetOrderRequest{
+	int32 ID = 1;
+  
+}
+
+message GetOrderResponse{
+  repeated SalesOrder data= 1;
+  string message= 2;
+  int32 code= 3;
+}
+
+message GetOrderDetailRequest{
+	int32 ID = 1;
+  
+}
+message GetOrderDetailResponse{
+  SalesOrder data= 1;
+  string message= 2;
+  int32 code= 3;
+}

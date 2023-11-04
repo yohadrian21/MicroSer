@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option csharp_namespace = "ItemGRPC";
+
+package Item;
+
+// The greeting service definition.
+service Items {
+  // Sends a greeting
+  rpc GetItem (GetItemRequest) returns (GetItemResponse);
+  rpc GetItemDetail (GetItemDetailRequest) returns (GetItemDetailResponse);
+  rpc CreateItem (Item) returns (Item);
+
+}
+
+// The request message containing the user's name.
+message Item {
+  string name = 1;
+  double unit_price = 2;
+  int32 id = 3;
+
+}
+
+message GetItemRequest {
+  string name = 1;
+}
+
+
+// The response message containing the greetings.
+message GetItemResponse {
+  repeated Item data= 1;
+  string message= 2;
+  int32 code= 3;
+
+}
+message GetItemDetailRequest {
+  int32 ID = 1;
+}
+
+
+// The response message containing the greetings.
+message GetItemDetailResponse {
+  Item data= 1;
+  string message= 2;
+  int32 code= 3;
+
+}

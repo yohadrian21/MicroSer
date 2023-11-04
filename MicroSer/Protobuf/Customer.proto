@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option csharp_namespace = "CustomerClient";
+
+package customer;
+
+// The greeting service definition.
+service Customers {
+  // Sends a greeting
+  rpc GetCustomer (GetCustomerRequest) returns (GetCustomerResponse);
+  rpc GetCustomerDetail (GetCustomerDetailRequest) returns (GetCustomerDetailResponse);
+  rpc CreateCustomer (Customer) returns (Customer);
+
+}
+
+// The request message containing the user's name.
+message Customer {
+  string name = 1;
+  string address = 2;
+  int32 id = 3;
+
+}
+
+message GetCustomerRequest {
+  string name = 1;
+}
+
+
+// The response message containing the greetings.
+message GetCustomerResponse {
+  repeated Customer data= 1;
+  string message= 2;
+  int32 code= 3;
+
+}
+message GetCustomerDetailRequest {
+  int32 ID = 1;
+}
+
+
+// The response message containing the greetings.
+message GetCustomerDetailResponse {
+  Customer data= 1;
+  string message= 2;
+  int32 code= 3;
+
+}
