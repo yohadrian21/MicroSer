@@ -11,9 +11,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+var connectionString = builder.Configuration.GetConnectionString("MicroSerDb")
+    ?? throw new InvalidOperationException(
+        "Connection string 'MicroSerDb' is not configured. Set it with 'dotnet user-secrets' or the " +
+        "ConnectionStrings__MicroSerDb environment variable (see README.md).");
 builder.Services.AddDbContext<MicroSerContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString($"Data Source=localhost;Initial Catalog=Customer;Encrypt=false;User Id=sa;Password=Contraseña12345678"));
+    options.UseSqlServer(connectionString);
 });
 var app = builder.Build();
 
