@@ -9,9 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
+var connectionString = builder.Configuration.GetConnectionString("CustomerDb")
+    ?? throw new InvalidOperationException(
+        "Connection string 'CustomerDb' is not configured. Set it with 'dotnet user-secrets' or the " +
+        "ConnectionStrings__CustomerDb environment variable (see README.md).");
 builder.Services.AddDbContext<CustomerContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString($"Data Source=localhost;Initial Catalog=Customer;Encrypt=false;User Id=sa;Password=Contraseña12345678"));
+    options.UseSqlServer(connectionString);
 });
 
 var app = builder.Build();

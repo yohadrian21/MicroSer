@@ -9,9 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
+var connectionString = builder.Configuration.GetConnectionString("OrderDb")
+    ?? throw new InvalidOperationException(
+        "Connection string 'OrderDb' is not configured. Set it with 'dotnet user-secrets' or the " +
+        "ConnectionStrings__OrderDb environment variable (see README.md).");
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString($"Data Source=localhost;Initial Catalog=Catalog;Encrypt=false;User Id=sa;Password=Contraseña12345678"));
+    options.UseSqlServer(connectionString);
 });
 
 var app = builder.Build();
